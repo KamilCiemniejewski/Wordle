@@ -17,7 +17,7 @@ namespace Wordle
         public MainPage()
         {
             InitializeComponent();
-            LoadingWordList();
+            InitializingGame();
         }
 
         private async void InitializingGame()

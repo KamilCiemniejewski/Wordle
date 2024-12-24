@@ -4,7 +4,7 @@
              x:Class="Wordle.MainPage">
 
     <StackLayout Padding = "20" Spacing = "10" VerticalOptions = "Center">
-        <Label Text = "Guess the word!" FontSize = "25" HorizontalOptions = "Center"/>
+        <Label Text = "Welcome to Wordle game!" FontSize = "25" HorizontalOptions = "Center"/>
 
         <StackLayout Orientation = "Horizontal" HorizontalOptions = "Center">
             <Entry x:Name = "Letter1" WidthRequest = "50" MaxLength = "1" Keyboard = "Text"/>
