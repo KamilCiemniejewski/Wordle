@@ -146,7 +146,7 @@ namespace Wordle
 
             if (guess.Length != 5 || !guess.All(char.IsLetter))
             {
-                FeedbackLabel.Text = "Please enter a 5 letter word.";
+                FeedbackLabel.Text = "This is not valid ❌. Please enter a 5 letter word";
                 return;
             }
 
@@ -156,23 +156,48 @@ namespace Wordle
         private void ProcessGuess(string guess)
         {
             attemptsMade++;
+            char[] feedback = new char[5];
+            string[] letterFeedback = new string[5];
 
-            FeedbackLabel.Text = $"You guessed: {guess}";
-
+            for (int i = 0; i < 5; i++)
+            {
+                if (guess[i] == chosenWord[i])
+                {
+                    feedback[i] = '✓'; 
+                    letterFeedback[i] = $"Letter '{guess[i]}' is correct and in the correct position.";
+                }
+                else if (chosenWord.Contains(guess[i]))
+                {
+                    feedback[i] = '~'; 
+                    letterFeedback[i] = $"Letter '{guess[i]}' is in the word but in the wrong position.";
+                }
+                else
+                {
+                    feedback[i] = 'X'; 
+                    letterFeedback[i] = $"Letter '{guess[i]}' is not in the word.";
+                }
+            }
+            
+            FeedbackLabel.Text = $"Guess: {guess} - Feedback: {string.Join(" ", feedback)}\n";
+            
+            for (int i = 0; i < 5; i++)
+            {
+                FeedbackLabel.Text += $"{letterFeedback[i]}\n";
+            }
+            
             if (guess == chosenWord)
             {
-                FeedbackLabel.Text = $"You managed to guess the word in {attemptsMade} attempts! Well done!";
+                FeedbackLabel.Text += $"\n🎉 Congratulations! You guessed the word '{chosenWord}' in {attemptsMade} attempts!";
             }
-
             else if (attemptsMade >= 6)
             {
-                FeedbackLabel.Text = $"Bad luck! The word was {chosenWord}.";
+                FeedbackLabel.Text += $"\n😞 You've used all attempts! The correct word was '{chosenWord}'.";
             }
-
             else
             {
-                FeedbackLabel.Text = $"Try again! Attempts left: {attemptsMade}";
+                FeedbackLabel.Text += $"\nAttempts remaining: {6 - attemptsMade}";
             }
+            Console.WriteLine(FeedbackLabel.Text);
         }
     }
 }
