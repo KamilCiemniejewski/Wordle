@@ -25,9 +25,7 @@ namespace Wordle
             try
             {
                 await LoadingWordList();
-                SelectingRandomWord();
-                attemptsMade = 0;
-                FeedbackLabel.Text = string.Empty;
+                NewGame();
             }
             catch (Exception ex)
             {
@@ -140,6 +138,13 @@ namespace Wordle
             Console.WriteLine($"Selected word is {chosenWord}");
         }
 
+        private void NewGame()
+        {
+            SelectingRandomWord();
+            attemptsMade = 0;
+            Letter1.Text = Letter2.Text = Letter3.Text = Letter4.Text = Letter5.Text = string.Empty;
+        }
+
         private void OnGuessSubmit(object sender, EventArgs e)
         {
             string guess = $"{Letter1.Text}{Letter2.Text}{Letter3.Text}{Letter4.Text}{Letter5.Text}".ToUpper();
@@ -198,6 +203,13 @@ namespace Wordle
                 FeedbackLabel.Text += $"\nAttempts remaining: {6 - attemptsMade}";
             }
             Console.WriteLine(FeedbackLabel.Text);
+        }
+
+        private void OnNewGame(object sender, EventArgs e)
+        {
+            NewGame();
+            FeedbackLabel.Text = "New Game has started!";
+            Letter1.Text = Letter2.Text = Letter3.Text = Letter4.Text = Letter5.Text = string.Empty;
         }
     }
 }
