@@ -256,5 +256,19 @@ namespace Wordle
         {
             await Navigation.PushAsync(new HistoryPage(gameHistory));
         }
+
+        private void OnLetterTextChanged(object sender, TextChangedEventArgs e)
+        {
+            var input = sender as Entry;
+            if (input == null || string.IsNullOrEmpty(e.NewTextValue)) return;
+
+            input.Text = e.NewTextValue.Length > 1 ? e.NewTextValue.Substring(0,1) : e.NewTextValue;
+
+            if (input == Letter1) Letter2.Focus();
+            else if (input == Letter2) Letter3.Focus();
+            else if (input == Letter3) Letter4.Focus();
+            else if (input == Letter4) Letter5.Focus();
+        }
+
     }
 }

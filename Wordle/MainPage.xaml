@@ -7,11 +7,11 @@
         <Label Text = "Welcome to WORDLE game!" FontSize = "25" HorizontalOptions = "Center"/>
 
         <StackLayout Orientation = "Horizontal" HorizontalOptions = "Center">
-            <Entry x:Name = "Letter1" WidthRequest = "50" MaxLength = "1" Keyboard = "Text"/>
-            <Entry x:Name = "Letter2" WidthRequest = "50" MaxLength = "1" Keyboard = "Text"/>
-            <Entry x:Name = "Letter3" WidthRequest = "50" MaxLength = "1" Keyboard = "Text"/>
-            <Entry x:Name = "Letter4" WidthRequest = "50" MaxLength = "1" Keyboard = "Text"/>
-            <Entry x:Name = "Letter5" WidthRequest = "50" MaxLength = "1" Keyboard = "Text"/>
+            <Entry x:Name = "Letter1" WidthRequest = "50" MaxLength = "1" TextChanged = "OnLetterTextChanged" Keyboard = "Text" Completed = "OnGuessSubmit"/>
+            <Entry x:Name = "Letter2" WidthRequest = "50" MaxLength = "1" TextChanged = "OnLetterTextChanged"  Keyboard = "Text"/>
+            <Entry x:Name = "Letter3" WidthRequest = "50" MaxLength = "1" TextChanged = "OnLetterTextChanged" Keyboard = "Text"/>
+            <Entry x:Name = "Letter4" WidthRequest = "50" MaxLength = "1" TextChanged = "OnLetterTextChanged" Keyboard = "Text"/>
+            <Entry x:Name = "Letter5" WidthRequest = "50" MaxLength = "1" TextChanged = "OnLetterTextChanged" Keyboard = "Text"/>
         </StackLayout>
         <Button Text = "Submit Your Guess" Clicked = "OnGuessSubmit" HorizontalOptions = "Center"/>
         <Label x:Name = "FeedbackLabel" FontSize = "20" TextColor = "Red" HorizontalOptions = "Center"/>
