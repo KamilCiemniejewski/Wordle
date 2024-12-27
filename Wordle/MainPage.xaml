@@ -17,6 +17,7 @@
         <Label x:Name = "FeedbackLabel" FontSize = "20" TextColor = "Red" HorizontalOptions = "Center"/>
 
         <Button Text = "New Game" Clicked = "OnNewGame" WidthRequest = "100" BackgroundColor = "Blue" TextColor = "White"/>
+        <Button Text = "View History" Clicked = "OnViewHistory"/>
     </StackLayout>
 
 </ContentPage>

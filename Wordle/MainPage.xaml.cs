@@ -2,6 +2,8 @@
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Text.Json;
+using System.Collections.Generic;
 
 namespace Wordle
 {
@@ -9,15 +11,19 @@ namespace Wordle
     {
         private const string nameOfFile = "words.txt";
         private const string urlFile = "https://raw.githubusercontent.com/DonH-ITS/jsonfiles/main/words.txt";
+        private const string historyFile = "history.json";
         private String filePathLocal => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), nameOfFile);
+        private String filePathHistory => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), historyFile);
 
         private string chosenWord;
         private int attemptsMade = 0;
+        private List<GameResult> gameHistory = new();
 
         public MainPage()
         {
             InitializeComponent();
             InitializingGame();
+            LoadingGameHistory();
         }
 
         private async void InitializingGame()
@@ -163,24 +169,37 @@ namespace Wordle
             attemptsMade++;
             char[] feedback = new char[5];
             string[] letterFeedback = new string[5];
+            string emojiGrid = "";
 
             for (int i = 0; i < 5; i++)
             {
                 if (guess[i] == chosenWord[i])
                 {
-                    feedback[i] = '✓'; 
+                    feedback[i] = '✓';
+                    emojiGrid += "🟩";
                     letterFeedback[i] = $"Letter '{guess[i]}' is correct and in the correct position.";
                 }
                 else if (chosenWord.Contains(guess[i]))
                 {
-                    feedback[i] = '~'; 
+                    feedback[i] = '~';
+                    emojiGrid += "🟨";
                     letterFeedback[i] = $"Letter '{guess[i]}' is in the word but in the wrong position.";
                 }
                 else
                 {
-                    feedback[i] = 'X'; 
+                    feedback[i] = 'X';
+                    emojiGrid += "⬜";
                     letterFeedback[i] = $"Letter '{guess[i]}' is not in the word.";
                 }
+            }
+
+            if (guess == chosenWord)
+            {
+                SavingGameResults(emojiGrid);
+            }
+            else if (attemptsMade >= 6)
+            {
+                SavingGameResults(emojiGrid);
             }
             
             FeedbackLabel.Text = $"Guess: {guess} - Feedback: {string.Join(" ", feedback)}\n";
@@ -210,6 +229,32 @@ namespace Wordle
             NewGame();
             FeedbackLabel.Text = "New Game has started!";
             Letter1.Text = Letter2.Text = Letter3.Text = Letter4.Text = Letter5.Text = string.Empty;
+        }
+
+        private void LoadingGameHistory()
+        {
+            if (File.Exists(filePathHistory))
+            {
+                var json = File.ReadAllText(filePathHistory);
+                gameHistory = JsonSerializer.Deserialize<List<GameResult>>(json) ?? new List<GameResult>();
+            }
+        }
+
+        private void SavingGameHistory()
+        {
+            File.WriteAllText(filePathHistory, JsonSerializer.Serialize(gameHistory));
+        }
+
+        private void SavingGameResults(string emojiGrid)
+        {
+            var result = new GameResult(DateTime.Now, chosenWord, attemptsMade, emojiGrid);
+            gameHistory.Add(result);
+            SavingGameHistory();
+        }
+
+        private async void OnViewHistory(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new HistoryPage(gameHistory));
         }
     }
 }
