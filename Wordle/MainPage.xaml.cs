@@ -26,6 +26,7 @@ namespace Wordle
         public MainPage()
         {
             InitializeComponent();
+            SetTheme();
             NewPlayerName();
             InitializingGame();
             LoadingGameHistory();
@@ -319,6 +320,24 @@ namespace Wordle
             else if (input == Letter2) Letter3.Focus();
             else if (input == Letter3) Letter4.Focus();
             else if (input == Letter4) Letter5.Focus();
+        }
+
+        private async void OnSettingsClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new SettingsPage());
+        }
+
+        private void SetTheme()
+        {
+            if (Preferences.ContainsKey("isDark"))
+            {
+                bool isDark = Preferences.Get("isDark", false);
+                App.Current.UserAppTheme = isDark ? AppTheme.Dark : AppTheme.Light;
+            }
+            else
+            {
+                App.Current.UserAppTheme = AppTheme.Light;
+            }
         }
     }
 }

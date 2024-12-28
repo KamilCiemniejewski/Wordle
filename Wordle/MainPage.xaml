@@ -18,6 +18,7 @@
 
         <Button Text = "New Game" Clicked = "OnNewGame" WidthRequest = "100" BackgroundColor = "Blue" TextColor = "White"/>
         <Button Text = "View History" Clicked = "OnViewHistory"/>
+        <Button Text = "Settings" Clicked = "OnSettingsClicked"/>
     </StackLayout>
 
 </ContentPage>
