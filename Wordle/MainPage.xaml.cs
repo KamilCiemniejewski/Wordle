@@ -47,40 +47,39 @@ namespace Wordle
 
         private async void NewPlayerName()
         {
-
             if (File.Exists(filePathPlayer))
             {
                 var json = File.ReadAllText(filePathPlayer);
-
                 var player = JsonSerializer.Deserialize<Player>(json);
-
                 playerName = player?.Name ?? "Player";
-
                 FeedbackLabel.Text = $"Hi {playerName}! Welcome back!";
                 return;
             }
 
             string name = await DisplayPromptAsync(
-                title: "Welcome to WORDLE!",
-                message: "Enter nickname:",
+                title: "Welcome to Wordle!",
+                message: "Enter your name:",
                 accept: "OK",
                 cancel: "Cancel",
                 placeholder: "Player",
                 maxLength: 20,
                 keyboard: Keyboard.Text
-                );
+            );
 
             if (!string.IsNullOrWhiteSpace(name))
             {
                 playerName = name;
-                SavingPlayerName();
-                FeedbackLabel.Text = $"Hi {playerName}! The game is about to start!";
             }
             else
             {
                 playerName = "Player";
-                SavingPlayerName();
             }
+
+            var newPlayer = new Player { Name = playerName };
+            var jsonString = JsonSerializer.Serialize(newPlayer);
+            File.WriteAllText(filePathPlayer, jsonString);
+
+            FeedbackLabel.Text = $"Hi {playerName}, welcome to Wordle!";
         }
 
         private void SavingPlayerName()
@@ -129,7 +128,7 @@ namespace Wordle
                 }
 
             }
-            catch ( Exception ex )
+            catch (Exception ex)
             {
                 Console.WriteLine($"Failed to download the list of words: {ex.Message}");
                 throw;
@@ -253,14 +252,14 @@ namespace Wordle
             {
                 SavingGameResults(emojiGrid);
             }
-            
+
             FeedbackLabel.Text = $"Guess: {guess} - Feedback: {string.Join(" ", feedback)}\n";
-            
+
             for (int i = 0; i < 5; i++)
             {
                 FeedbackLabel.Text += $"{letterFeedback[i]}\n";
             }
-            
+
             if (guess == chosenWord)
             {
                 FeedbackLabel.Text += $"\n🎉 Congratulations! You guessed the word '{chosenWord}' in {attemptsMade} attempts!";
@@ -314,7 +313,7 @@ namespace Wordle
             var input = sender as Entry;
             if (input == null || string.IsNullOrEmpty(e.NewTextValue)) return;
 
-            input.Text = e.NewTextValue.Length > 1 ? e.NewTextValue.Substring(0,1) : e.NewTextValue;
+            input.Text = e.NewTextValue.Length > 1 ? e.NewTextValue.Substring(0, 1) : e.NewTextValue;
 
             if (input == Letter1) Letter2.Focus();
             else if (input == Letter2) Letter3.Focus();
