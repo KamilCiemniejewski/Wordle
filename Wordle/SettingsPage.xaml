@@ -14,5 +14,16 @@
                     VerticalOptions="Center"
                     Toggled="OnThemeSwitchToggled" />
         </StackLayout>
+
+        <Label Text = "Difficulty" VerticalOptions = "Start" Margin = "0,30,0,0"/>
+        <Picker x:Name = "difficultySelect" VerticalOptions = "Start" SelectedIndexChanged = "OnDifficultyChanged">
+            <Picker.ItemsSource>
+                <x:Array Type = "{x:Type x:String}">
+                    <x:String>Easy</x:String>
+                    <x:String>Moderate</x:String>
+                    <x:String>Hard</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
     </StackLayout>
 </ContentPage>
