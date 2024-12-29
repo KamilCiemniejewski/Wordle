@@ -20,6 +20,7 @@ namespace Wordle
 
         private string chosenWord;
         private int attemptsMade = 0;
+        private int attemptsMax = 6;
         private string playerName;
         private List<GameResult> gameHistory = new();
 
@@ -27,6 +28,7 @@ namespace Wordle
         {
             InitializeComponent();
             SetTheme();
+            SetDifficulty();
             NewPlayerName();
             InitializingGame();
             LoadingGameHistory();
@@ -198,6 +200,7 @@ namespace Wordle
 
         private void NewGame()
         {
+            SetDifficulty();
             SelectingRandomWord();
             attemptsMade = 0;
             Letter1.Text = Letter2.Text = Letter3.Text = Letter4.Text = Letter5.Text = string.Empty;
@@ -249,7 +252,7 @@ namespace Wordle
             {
                 SavingGameResults(emojiGrid);
             }
-            else if (attemptsMade >= 6)
+            else if (attemptsMade >= attemptsMax)
             {
                 SavingGameResults(emojiGrid);
             }
@@ -265,13 +268,13 @@ namespace Wordle
             {
                 FeedbackLabel.Text += $"\n🎉 Congratulations! You guessed the word '{chosenWord}' in {attemptsMade} attempts!";
             }
-            else if (attemptsMade >= 6)
+            else if (attemptsMade >= attemptsMax)
             {
                 FeedbackLabel.Text += $"\n😞 You've used all attempts! The correct word was '{chosenWord}'.";
             }
             else
             {
-                FeedbackLabel.Text += $"\nAttempts remaining: {6 - attemptsMade}";
+                FeedbackLabel.Text += $"\nAttempts remaining: {attemptsMax - attemptsMade}";
             }
             Console.WriteLine(FeedbackLabel.Text);
         }
@@ -337,6 +340,27 @@ namespace Wordle
             else
             {
                 App.Current.UserAppTheme = AppTheme.Light;
+            }
+        }
+
+        private void SetDifficulty()
+        {
+            string difficulty = Preferences.Get("Difficulty", "Moderate");
+            
+            switch (difficulty)
+            {
+                case "Easy":
+                    attemptsMax = 12;
+                    break;
+                case "Moderate":
+                    attemptsMax = 6;
+                    break;
+                case "Hard":
+                    attemptsMax = 3;
+                    break;
+                default:
+                    attemptsMax = 6;
+                    break;
             }
         }
     }
