@@ -26,9 +26,12 @@ namespace Wordle
 
             string selectedDifficulty = difficultySelect.SelectedItem.ToString();
 
-            Preferences.Set("Difficulty", selectedDifficulty);
-
-            DisplayAlert("You changed difficulty", $"Game difficulty has been set to {selectedDifficulty}.", "OK");
+            string currentDifficulty = Preferences.Get("Difficulty", "Moderate");
+            if (selectedDifficulty != currentDifficulty)
+            {
+                Preferences.Set("Difficulty", selectedDifficulty);
+                DisplayAlert("You changed difficulty", $"Game difficulty has been set to {selectedDifficulty}.", "OK");
+            }
         }
     }
 }

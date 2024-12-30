@@ -37,6 +37,7 @@ namespace Wordle
             NewPlayerName();
             InitializingGame();
             LoadingGameHistory();
+            EnableInput(false);
         }
 
         private async void InitializingGame()
@@ -209,6 +210,16 @@ namespace Wordle
             SelectingRandomWord();
             attemptsMade = 0;
             Letter1.Text = Letter2.Text = Letter3.Text = Letter4.Text = Letter5.Text = string.Empty;
+            EnableInput(true);
+        }
+
+        private void EnableInput(bool isEnabled)
+        {
+            Letter1.IsEnabled = isEnabled;
+            Letter2.IsEnabled = isEnabled;
+            Letter3.IsEnabled = isEnabled;
+            Letter4.IsEnabled = isEnabled;
+            Letter5.IsEnabled = isEnabled;
         }
 
         private void OnGuessSubmit(object sender, EventArgs e)
@@ -273,10 +284,12 @@ namespace Wordle
             {
                 FeedbackLabel.Text += $"\n🎉 Congratulations! You guessed the word '{chosenWord}' in {attemptsMade} attempts!";
                 PlayWinSound();
+                EnableInput(false);
             }
             else if (attemptsMade >= attemptsMax)
             {
                 FeedbackLabel.Text += $"\n😞 You've used all attempts! The correct word was '{chosenWord}'.";
+                EnableInput(false);
             }
             else
             {
