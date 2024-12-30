@@ -4,6 +4,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Text.Json;
 using System.Collections.Generic;
+using Plugin.Maui.Audio;
+using Microsoft.Maui.Controls;
 
 namespace Wordle
 {
@@ -267,6 +269,7 @@ namespace Wordle
             if (guess == chosenWord)
             {
                 FeedbackLabel.Text += $"\n🎉 Congratulations! You guessed the word '{chosenWord}' in {attemptsMade} attempts!";
+                WinSoundEffect();
             }
             else if (attemptsMade >= attemptsMax)
             {
@@ -362,6 +365,11 @@ namespace Wordle
                     attemptsMax = 6;
                     break;
             }
+        }
+        private void WinSoundEffect()
+        {
+            WinSound.Source = "win.mp3";
+            WinSound.Play();
         }
     }
 }
