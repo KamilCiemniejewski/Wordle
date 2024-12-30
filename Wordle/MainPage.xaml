@@ -3,8 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Wordle.MainPage">
 
-    <StackLayout Padding = "20" Spacing = "10" VerticalOptions = "Center">
-        <Label Text = "Welcome to WORDLE game!" FontSize = "25" HorizontalOptions = "Center"/>
+    <StackLayout Padding = "20" Spacing = "10" VerticalOptions = "CenterAndExpand" HorizontalOptions = "Center">
+        <Label Text = "WORDLE" FontSize = "40" FontAttributes = "Bold" TextColor="#FFC107" HorizontalOptions = "Center" VerticalOptions="Start" Margin="0,40,0,20">
+            <Label.Shadow>
+                <Shadow Brush="Black" Offset="2,2" Opacity="0.3" Radius="3"/>
+            </Label.Shadow>
+        </Label>
 
         <StackLayout Orientation = "Horizontal" HorizontalOptions = "Center">
             <Entry x:Name = "Letter1" IsEnabled = "False" WidthRequest = "50" MaxLength = "1" TextChanged = "OnLetterTextChanged" Keyboard = "Text" Completed = "OnGuessSubmit"/>
@@ -13,12 +17,12 @@
             <Entry x:Name = "Letter4" IsEnabled = "False" WidthRequest = "50" MaxLength = "1" TextChanged = "OnLetterTextChanged" Keyboard = "Text"/>
             <Entry x:Name = "Letter5" IsEnabled = "False" WidthRequest = "50" MaxLength = "1" TextChanged = "OnLetterTextChanged" Keyboard = "Text"/>
         </StackLayout>
-        <Button Text = "Submit Your Guess" Clicked = "OnGuessSubmit" HorizontalOptions = "Center"/>
+        <Button Text = "Submit Your Guess" Clicked = "OnGuessSubmit" CornerRadius="15" HeightRequest = "50" WidthRequest = "250" FontSize = "20" BackgroundColor ="BlueViolet" TextColor ="White" HorizontalOptions = "Center"/>
         <Label x:Name = "FeedbackLabel" FontSize = "20" TextColor = "Red" HorizontalOptions = "Center"/>
 
-        <Button Text = "New Game" Clicked = "OnNewGame" VerticalOptions = "Center" HorizontalOptions = "Center" BackgroundColor = "Blue" TextColor = "White"/>
-        <Button Text = "View History" Clicked = "OnViewHistory" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor = "Blue" TextColor = "White"/>
-        <Button Text = "Settings" Clicked = "OnSettingsClicked" VerticalOptions="Center" HorizontalOptions="Center"  BackgroundColor ="Blue" TextColor ="White"/>
+        <Button Text = "New Game" Clicked = "OnNewGame" CornerRadius = "15" HeightRequest = "50" WidthRequest = "200" FontSize = "20" BackgroundColor = "#4CAF50" TextColor = "White"/>
+        <Button Text = "View History" Clicked = "OnViewHistory" CornerRadius = "15" HeightRequest = "50" WidthRequest = "200" FontSize="20" BackgroundColor = "#FF5722" TextColor = "White"/>
+        <Button Text = "Settings" Clicked = "OnSettingsClicked" CornerRadius = "15" HeightRequest = "50" WidthRequest = "200" FontSize="20" BackgroundColor ="#2196F3" TextColor ="White"/>
 
     </StackLayout>
 
