@@ -26,9 +26,12 @@ namespace Wordle
         private string playerName;
         private List<GameResult> gameHistory = new();
 
+        private readonly IAudioManager audioManager;
+
         public MainPage()
         {
             InitializeComponent();
+            audioManager = AudioManager.Current;
             SetTheme();
             SetDifficulty();
             NewPlayerName();
@@ -269,7 +272,7 @@ namespace Wordle
             if (guess == chosenWord)
             {
                 FeedbackLabel.Text += $"\n🎉 Congratulations! You guessed the word '{chosenWord}' in {attemptsMade} attempts!";
-                WinSoundEffect();
+                PlayWinSound();
             }
             else if (attemptsMade >= attemptsMax)
             {
@@ -366,10 +369,10 @@ namespace Wordle
                     break;
             }
         }
-        private void WinSoundEffect()
+        private async void PlayWinSound()
         {
-            WinSound.Source = "win.mp3";
-            WinSound.Play();
+            var audioPlayer = audioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("win.mp3"));
+            audioPlayer.Play();
         }
     }
 }

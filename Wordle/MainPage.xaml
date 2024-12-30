@@ -20,7 +20,6 @@
         <Button Text = "View History" Clicked = "OnViewHistory" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor = "Blue" TextColor = "White"/>
         <Button Text = "Settings" Clicked = "OnSettingsClicked" VerticalOptions="Center" HorizontalOptions="Center"  BackgroundColor ="Blue" TextColor ="White"/>
 
-        <MediaElement x:Name = "WinSound" Source = "win.mp3" AutoPlay = "False"/>
     </StackLayout>
 
 </ContentPage>
