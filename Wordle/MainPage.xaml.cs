@@ -11,13 +11,13 @@ namespace Wordle
 {
     public partial class MainPage : ContentPage
     {
+        //Variables
         private const string nameOfFile = "words.txt";
         private const string urlFile = "https://raw.githubusercontent.com/DonH-ITS/jsonfiles/main/words.txt";
         private const string historyFile = "history.json";
         private const string playerFile = "player.json";
         private String filePathLocal => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), nameOfFile);
         private String filePathHistory => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), historyFile);
-
         private String filePathPlayer => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), playerFile);
 
         private string chosenWord;
@@ -54,6 +54,7 @@ namespace Wordle
             }
         }
 
+        //Attempt to allow user to to input their name 
         private async void NewPlayerName()
         {
             if (File.Exists(filePathPlayer))
@@ -118,7 +119,7 @@ namespace Wordle
             }
         }
 
-
+        //Downloads word list
         private async Task DownloadingWordListAsync()
         {
             try
@@ -144,6 +145,7 @@ namespace Wordle
             }
         }
 
+        //Reads words from the list
         private string ReadingWordList()
         {
             if (!File.Exists(filePathLocal))
@@ -182,6 +184,7 @@ namespace Wordle
             return string.Empty;
         }
 
+        //Selects random word from the list
         private void SelectingRandomWord()
         {
             string wordListContent = ReadingWordList();
@@ -213,6 +216,7 @@ namespace Wordle
             EnableInput(true);
         }
 
+        //Allow user to only start typing when they click "New Game" button
         private void EnableInput(bool isEnabled)
         {
             Letter1.IsEnabled = isEnabled;
@@ -235,6 +239,7 @@ namespace Wordle
             ProcessGuess(guess);
         }
 
+        //Feedback after entering a guess
         private void ProcessGuess(string guess)
         {
             attemptsMade++;
@@ -288,7 +293,7 @@ namespace Wordle
             }
             else if (attemptsMade >= attemptsMax)
             {
-                FeedbackLabel.Text += $"\n😞 You've used all attempts! The correct word was '{chosenWord}'.";
+                FeedbackLabel.Text += $"\n😞 Bad luck! You've used all attempts! The correct word was '{chosenWord}'.";
                 EnableInput(false);
             }
             else
@@ -298,6 +303,7 @@ namespace Wordle
             Console.WriteLine(FeedbackLabel.Text);
         }
 
+        //Allow user to click and start a new game
         private void OnNewGame(object sender, EventArgs e)
         {
             NewGame();
@@ -305,6 +311,7 @@ namespace Wordle
             Letter1.Text = Letter2.Text = Letter3.Text = Letter4.Text = Letter5.Text = string.Empty;
         }
 
+        //Loads game history
         private void LoadingGameHistory()
         {
             if (File.Exists(filePathHistory))
@@ -319,6 +326,7 @@ namespace Wordle
             File.WriteAllText(filePathHistory, JsonSerializer.Serialize(gameHistory));
         }
 
+        //Saves results, random word, date time, how many attemps were made and emoji letter position
         private void SavingGameResults(string emojiGrid)
         {
             var result = new GameResult(DateTime.Now, chosenWord, attemptsMade, emojiGrid);
@@ -326,11 +334,13 @@ namespace Wordle
             SavingGameHistory();
         }
 
+        //Bring user to game history page
         private async void OnViewHistory(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new HistoryPage(gameHistory));
         }
 
+        //Auto move to the next box
         private void OnLetterTextChanged(object sender, TextChangedEventArgs e)
         {
             var input = sender as Entry;
@@ -342,13 +352,16 @@ namespace Wordle
             else if (input == Letter2) Letter3.Focus();
             else if (input == Letter3) Letter4.Focus();
             else if (input == Letter4) Letter5.Focus();
+            
         }
 
+        //Brings to the settings page
         private async void OnSettingsClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new SettingsPage());
         }
 
+        //Allowing user to choose light and dark mode
         private void SetTheme()
         {
             if (Preferences.ContainsKey("isDark"))
@@ -362,6 +375,7 @@ namespace Wordle
             }
         }
 
+        //Allow user to choose difficulty
         private void SetDifficulty()
         {
             string difficulty = Preferences.Get("Difficulty", "Moderate");
@@ -382,6 +396,7 @@ namespace Wordle
                     break;
             }
         }
+        //Sound play after guessing the word correctly
         private async void PlayWinSound()
         {
             var audioPlayer = audioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("win.mp3"));

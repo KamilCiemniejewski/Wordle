@@ -5,6 +5,7 @@ namespace Wordle
 {
     public partial class SettingsPage : ContentPage
     {
+        //Saving settings
         public SettingsPage()
         {
             InitializeComponent();
@@ -13,6 +14,7 @@ namespace Wordle
             difficultySelect.SelectedItem = savedDifficulty;
         }
 
+        //Switch between light and dark mode
         private void OnThemeSwitchToggled(object sender, ToggledEventArgs e)
         {
             bool isDarkMode = e.Value;
@@ -20,6 +22,7 @@ namespace Wordle
             App.Current.UserAppTheme = isDarkMode ? AppTheme.Dark : AppTheme.Light;
         }
 
+        //Allow user to change difficulty
         private void OnDifficultyChanged(object sender, EventArgs e)
         {
             if (difficultySelect.SelectedIndex == -1) return;
