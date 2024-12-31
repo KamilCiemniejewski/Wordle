@@ -3,16 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Wordle.HistoryPage">
     <StackLayout>
-    <Label Text="Game History" FontSize="Large" HorizontalOptions="Center" />
-    <ListView x:Name="HistoryListView">
+    <Label Text = "Game History" FontSize = "Large" FontAttributes = "Bold" HorizontalOptions = "Center" />
+    <ListView x:Name = "HistoryListView">
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>
-                    <StackLayout Orientation="Vertical" Padding="10">
-                        <Label Text="{Binding Timestamp}" FontSize="Small" />
-                        <Label Text="{Binding Word}" FontSize="Medium" />
-                        <Label Text="{Binding Guesses}" FontSize="Small" />
-                        <Label Text="{Binding EmojiGrid}" FontSize="Small" />
+                    <StackLayout Orientation = "Vertical" Padding = "10">
+                        <Label Text = "{Binding Timestamp}" FontSize = "Small" />
+                        <Label Text = "{Binding Word}" FontSize = "Medium" />
+                        <Label Text = "{Binding Guesses}" FontSize = "Small" />
+                        <Label Text = "{Binding EmojiGrid}" FontSize = "Small" />
                     </StackLayout>
                 </ViewCell>
             </DataTemplate>

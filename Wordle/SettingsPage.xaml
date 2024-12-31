@@ -2,17 +2,18 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Wordle.SettingsPage">
-    <StackLayout Padding="20">
-        <Label Text="Settings" 
-               FontSize="Large" 
-               HorizontalOptions="Center" 
-               VerticalOptions="Start" />
+    <StackLayout Padding = "20">
+        <Label Text = "Settings" 
+               FontSize = "Large" 
+               FontAttributes = "Bold"
+               HorizontalOptions = "Center" 
+               VerticalOptions = "Start" />
 
-        <StackLayout Orientation="Horizontal" VerticalOptions="Start" Margin="0,20,0,0">
-            <Label Text="Dark Mode" VerticalOptions="Center" />
-            <Switch x:Name="themeSwitch"
-                    VerticalOptions="Center"
-                    Toggled="OnThemeSwitchToggled" />
+        <StackLayout Orientation = "Horizontal" VerticalOptions = "Start" Margin = "0,20,0,0">
+            <Label Text = "Dark Mode" VerticalOptions = "Center" />
+            <Switch x:Name = "themeSwitch"
+                    VerticalOptions = "Center"
+                    Toggled = "OnThemeSwitchToggled" />
         </StackLayout>
 
         <Label Text = "Difficulty" VerticalOptions = "Start" Margin = "0,30,0,0"/>
